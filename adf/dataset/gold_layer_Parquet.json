@@ -1,0 +1,21 @@
+{
+	"name": "gold_layer_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "avito_transformation_blobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "curated",
+				"container": "avitocontainer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

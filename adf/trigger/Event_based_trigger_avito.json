@@ -1,0 +1,25 @@
+{
+	"name": "Event_based_trigger_avito",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "avito_etl",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/avitocontainer/blobs/raw/",
+			"blobPathEndsWith": ".tsv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/342bd81b-c06b-4b1d-adcf-ddc6f7ac5b44/resourceGroups/avito-rg/providers/Microsoft.Storage/storageAccounts/avitostorage",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,57 @@
+{
+	"name": "avito_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_avito",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "avito"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "AdsInfo_utf8.tsv",
+				"folderPath": "raw2",
+				"container": "avitocontainer"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "AdID",
+				"type": "String"
+			},
+			{
+				"name": "LocationID",
+				"type": "String"
+			},
+			{
+				"name": "CategoryID",
+				"type": "String"
+			},
+			{
+				"name": "Params",
+				"type": "String"
+			},
+			{
+				"name": "Price",
+				"type": "String"
+			},
+			{
+				"name": "Title",
+				"type": "String"
+			},
+			{
+				"name": "IsContext",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

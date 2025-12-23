@@ -1,0 +1,9 @@
+{
+	"name": "avito-instance",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "52dd150c-e9c5-43fb-bf4e-019fab5ef1fb",
+		"tenantId": "4d422d04-0ea6-447e-8e15-7e2be97969f7"
+	}
+}

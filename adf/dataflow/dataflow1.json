@@ -1,0 +1,72 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "avito_datalake",
+						"type": "DatasetReference"
+					},
+					"name": "raw2dataflow"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "avito_sink_transformation",
+						"type": "DatasetReference"
+					},
+					"name": "avitosink",
+					"description": "destination for the avito dataset"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_layer_Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "avitosinkgold"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectgold",
+					"description": "Renaming raw2dataflow to selectgold with columns 'ad_id, 343, 43, {1283:'Ð¡ Ð¿Ñ€Ð¾Ð±ÐµÐ³Ð¾Ð¼', 633:'Ð¡Ð¸Ð½Ð¸Ð¹', 1159:0, 210:'Toyota', 184:'0 - 4 999', 1162:0, 1165:0, 1135:0, 1329:'2.0', 1138:0, 277:'Estima', 695:'ÐŸÐ¾Ð»Ð½Ñ‹Ð¹', 696:'Ð¿Ñ€Ð°Ð²Ñ‹Ð¹', 697:'ÐÐµ Ð±Ð¸Ñ‚Ñ‹Ð¹', 186:'Ð”Ð¸Ð·ÐµÐ»ÑŒ', 187:'ÐœÐ¸ÐºÑ€Ð¾Ð°Ð²Ñ‚Ð¾Ð±ÑƒÑ', 188:'1993', 185:'ÐœÐµÑ…Ð°Ð½Ð¸ÐºÐ°'}} as string, {160000, Toyota Estima, 1993, 0'"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {1} as short,",
+				"          {343} as integer,",
+				"          {43} as integer,",
+				"          {{1283:'Ð¡ Ð¿Ñ€Ð¾Ð±ÐµÐ³Ð¾Ð¼', 633:'Ð¡Ð¸Ð½Ð¸Ð¹', 1159:0, 210:'Toyota', 184:'0 - 4 999', 1162:0, 1165:0, 1135:0, 1329:'2.0', 1138:0, 277:'Estima', 695:'ÐŸÐ¾Ð»Ð½Ñ‹Ð¹', 696:'Ð¿Ñ€Ð°Ð²Ñ‹Ð¹', 697:'ÐÐµ Ð±Ð¸Ñ‚Ñ‹Ð¹', 186:'Ð”Ð¸Ð·ÐµÐ»ÑŒ', 187:'ÐœÐ¸ÐºÑ€Ð¾Ð°Ð²Ñ‚Ð¾Ð±ÑƒÑ', 188:'1993', 185:'ÐœÐµÑ…Ð°Ð½Ð¸ÐºÐ°'}} as string, {160000} as double,",
+				"          {Toyota Estima, 1993} as string,",
+				"          {0} as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> raw2dataflow",
+				"raw2dataflow select(mapColumn(",
+				"          ad_id = {1},",
+				"          location_id = {343},",
+				"          category_id = {43},",
+				"          params = {{1283:'Ð¡ Ð¿Ñ€Ð¾Ð±ÐµÐ³Ð¾Ð¼', 633:'Ð¡Ð¸Ð½Ð¸Ð¹', 1159:0, 210:'Toyota', 184:'0 - 4 999', 1162:0, 1165:0, 1135:0, 1329:'2.0', 1138:0, 277:'Estima', 695:'ÐŸÐ¾Ð»Ð½Ñ‹Ð¹', 696:'Ð¿Ñ€Ð°Ð²Ñ‹Ð¹', 697:'ÐÐµ Ð±Ð¸Ñ‚Ñ‹Ð¹', 186:'Ð”Ð¸Ð·ÐµÐ»ÑŒ', 187:'ÐœÐ¸ÐºÑ€Ð¾Ð°Ð²Ñ‚Ð¾Ð±ÑƒÑ', 188:'1993', 185:'ÐœÐµÑ…Ð°Ð½Ð¸ÐºÐ°'}} as string, {160000},",
+				"          title = {Toyota Estima, 1993},",
+				"          is_context = {0}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectgold",
+				"raw2dataflow sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> avitosink",
+				"selectgold sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> avitosinkgold"
+			]
+		}
+	}
+}
